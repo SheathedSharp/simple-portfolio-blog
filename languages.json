@@ -1,0 +1,122 @@
+{
+    "zh": {
+      "nav": {
+        "home": "首页",
+        "about": "关于",
+        "skills": "技能",
+        "projects": "项目",
+        "contact": "联系"
+      },
+      "hero": {
+        "greeting": "你好呀，我是",
+        "name": "hiddenSharp429",
+        "title": "我是一名全栈开发者💻、移动应用开发者📱和机器学习爱好者🧠，致力于解决现实世界的问题🌏。我热衷于创造软件和工具来帮助人们，探索AI的前沿，并建立社区。如果你觉得我的项目有趣，欢迎给个星标🌟，你的支持可能会让某人的一天变得更美好🙏。"
+      },
+      "about": {
+        "title": "关于我",
+        "content": "我是hiddenSharp429！我是一名全栈开发者、移动应用开发者和机器学习爱好者，致力于解决现实世界的问题。我热衷于创造软件和工具来帮助人们，探索AI的前沿，并建立社区。我喜欢与不同的人交流，如果你想打个招呼，我很乐意认识你！",
+        "currentWork": "目前正在进行的工作：",
+        "work1": "学习并研究计算机视觉",
+        "work2": "探索模式识别技术",
+        "work3": "深入研究各种神经网络模型",
+        "work4": "开发AI驱动的工具以简化工作流程",
+        "work5": "创建对日常生活产生积极影响的应用程序",
+        "challenges": "当前的自我挑战：",
+        "challenge1": "每周学习并实现一种新的机器学习算法",
+        "challenge2": "为开源项目做贡献",
+        "challenge3": "提高对软件架构和设计模式的理解",
+        "challenge4": "撰写技术博客文章以分享知识",
+        "challenge5": "平衡编码和体育活动，保持健康的生活方式"
+      },
+      "skills": {
+        "title": "技能",
+        "description": "我擅长的语言和工具："
+      },
+      "projects": {
+        "title": "精选项目",
+        "project1": {
+          "name": "学生考勤系统",
+          "description": "基于Flask的系统，带有微信小程序前端"
+        },
+        "project2": {
+          "name": "STU青年团委微信小程序",
+          "description": "为大学委员会开发的微信小程序"
+        },
+        "project3": {
+          "name": "Python进化算法",
+          "description": "探索自然启发的优化技术"
+        },
+        "viewDetails": "查看详情"
+      },
+      "contact": {
+        "title": "联系我",
+        "namePlaceholder": "您的姓名",
+        "emailPlaceholder": "您的邮箱",
+        "messagePlaceholder": "您的留言",
+        "submit": "发送消息"
+      },
+      "footer": {
+        "rights": "保留所有权利。"
+      }
+    },
+    "en": {
+      "nav": {
+        "home": "Home",
+        "about": "About",
+        "skills": "Skills",
+        "projects": "Projects",
+        "contact": "Contact"
+      },
+      "hero": {
+        "greeting": "Hey there! I'm",
+        "name": "hiddenSharp429",
+        "title": "I'm a Full-Stack Developer💻, Mobile App Developer📱, and Machine Learning Enthusiast🧠, looking to solve real-world problems🌏. I'm passionate about creating software and tools to help people, exploring the frontiers of AI, and building a community. Do 🌟 my repository if you find my project interesting, at least your star could make someone's day 🙏."
+      },
+      "about": {
+        "title": "About Me",
+        "content": "I'm hiddenSharp429! I'm a Full-Stack Developer, Mobile App Developer, and Machine Learning Enthusiast, looking to solve real-world problems. I'm passionate about creating software and tools to help people, exploring the frontiers of AI, and building a community. I love connecting with different people, so if you want to say hi, I'll be happy to meet you!",
+        "currentWork": "Things that I'm currently working on:",
+        "work1": "Diving deep into Computer Vision",
+        "work2": "Exploring Pattern Recognition techniques",
+        "work3": "Implementing Neural Networks from scratch",
+        "work4": "Developing AI-powered tools to simplify workflows",
+        "work5": "Creating applications that make a positive impact on daily life",
+        "challenges": "Challenges that I'm currently challenging myself:",
+        "challenge1": "Learn and implement a new machine learning algorithm every week",
+        "challenge2": "Contribute to open source projects",
+        "challenge3": "Improve my understanding of software architecture and design patterns",
+        "challenge4": "Write technical blog posts to share knowledge",
+        "challenge5": "Balance coding with physical activity for a healthy lifestyle"
+      },
+      "skills": {
+        "title": "Skills",
+        "description": "Languages and Tools I'm proficient with:"
+      },
+      "projects": {
+        "title": "Featured Projects",
+        "project1": {
+          "name": "Student Attendance System",
+          "description": "A Flask-based system with WeChat Mini Program frontend"
+        },
+        "project2": {
+          "name": "STU Youth League Committee WeChat Mini Program",
+          "description": "WeChat Mini Program for university committee"
+        },
+        "project3": {
+          "name": "Evolutionary Algorithms in Python",
+          "description": "Exploring nature-inspired optimization techniques"
+        },
+        "viewDetails": "View Details"
+      },
+      "contact": {
+        "title": "Contact Me",
+        "namePlaceholder": "Your Name",
+        "emailPlaceholder": "Your Email",
+        "messagePlaceholder": "Your Message",
+        "submit": "Send Message"
+      },
+      "footer": {
+        "rights": "All rights reserved."
+      }
+    }
+  }
