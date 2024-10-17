@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('nav a');
+    const navLinks = document.querySelectorAll('nav ul li a');
     let currentSection = 0;
     let isScrolling = false;
     let currentLanguage = 'zh';
@@ -21,14 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 isScrolling = false;
                 currentSection = index;
-                updateNavigation();
+                updateActiveLink();
             }, 1000);
         }
     }
 
-    function updateNavigation() {
+    function updateActiveLink() {
+        let activeIndex = currentSection;
+        // 处理"关于"部分的两个页面
+        if (currentSection === 1 || currentSection === 2) {
+            activeIndex = 1; // "关于"导航项的索引
+        } else if (currentSection > 2) {
+            activeIndex = currentSection - 1; // 因为"关于"占用了两个section，所以后面的索引需要减1
+        }
+
         navLinks.forEach((link, index) => {
-            if (index === currentSection) {
+            if (index === activeIndex) {
                 link.classList.add('active');
             } else {
                 link.classList.remove('active');
@@ -43,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sectionHeight = section.offsetHeight;
             if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                 currentSection = index;
-                updateNavigation();
+                updateActiveLink();
             }
         });
     }
@@ -62,7 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach((link, index) => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            scrollToSection(index);
+            let targetIndex = index;
+            if (index > 1) {
+                targetIndex = index + 1; // 因为"关于"占用了两个section，所以后面的索引需要加1
+            }
+            scrollToSection(targetIndex);
         });
     });
 
@@ -116,5 +128,148 @@ document.addEventListener('DOMContentLoaded', () => {
         return path.split('.').reduce((p, c) => p && p[c] || null, obj);
     }
 
-    updateNavigation();
+    let allProjects = [];
+
+    function getLanguageColor(language) {
+        const colors = {
+            JavaScript: '#f1e05a',
+            Python: '#3572A5',
+            HTML: '#e34c26',
+            CSS: '#563d7c',
+            Java: '#b07219',
+            // 添加更多语言和对应的颜色
+        };
+        return colors[language] || '#858585';
+    }
+
+    function displayProjects(projects) {
+        const container = document.getElementById('projects-container');
+        container.innerHTML = '';
+
+        projects.slice(0, 10).forEach(project => {
+            const projectElement = document.createElement('div');
+            projectElement.className = 'project-item';
+            projectElement.innerHTML = `
+                <h3><a href="${project.html_url}" target="_blank">${project.name}</a></h3>
+                <p>${project.description || 'No description available.'}</p>
+                <div class="project-meta">
+                    <span class="project-language" style="background-color: ${getLanguageColor(project.language)}">${project.language}</span>
+                    <span class="project-stars"><i class="fas fa-star"></i>${project.stargazers_count}</span>
+                </div>
+            `;
+            container.appendChild(projectElement);
+        });
+    }
+
+    function fetchGitHubProjects() {
+        const username = 'hiddenSharp429'; // 替换为您的GitHub用户名
+        fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`)
+            .then(response => response.json())
+            .then(repos => {
+                allProjects = repos;
+                displayProjects(allProjects);
+            })
+            .catch(error => console.error('Error fetching GitHub projects:', error));
+    }
+
+    function refreshProjects() {
+        const shuffled = allProjects.sort(() => 0.5 - Math.random());
+        displayProjects(shuffled);
+    }
+
+    // 在现有的DOMContentLoaded事件监听器中添加以下代码
+
+    function fetchGitHubLanguages() {
+        const username = 'hiddenSharp429'; // 替换为您的GitHub用户名
+        fetch(`https://api.github.com/users/${username}/repos`)
+            .then(response => response.json())
+            .then(repos => {
+                const languages = {};
+                repos.forEach(repo => {
+                    if (repo.language) {
+                        languages[repo.language] = (languages[repo.language] || 0) + 1;
+                    }
+                });
+                displayLanguages(languages);
+            })
+            .catch(error => console.error('Error fetching GitHub data:', error));
+    }
+
+    function displayLanguages(languages) {
+        const container = document.getElementById('github-languages');
+        const totalRepos = Object.values(languages).reduce((a, b) => a + b, 0);
+        
+        Object.entries(languages)
+            .sort((a, b) => b[1] - a[1])
+            .forEach(([language, count]) => {
+                const percentage = ((count / totalRepos) * 100).toFixed(1);
+                const languageItem = document.createElement('div');
+                languageItem.className = 'language-item';
+                languageItem.innerHTML = `
+                    <span class="language-color" style="background-color: ${getLanguageColor(language)}"></span>
+                    <span class="language-name">${language}</span>
+                    <span class="language-percentage">${percentage}%</span>
+                `;
+                container.appendChild(languageItem);
+            });
+    }
+
+    function getLanguageColor(language) {
+        const colors = {
+            JavaScript: '#f1e05a',
+            Python: '#3572A5',
+            HTML: '#e34c26',
+            CSS: '#563d7c',
+            Java: '#b07219',
+            // 添加更多语言和对应的颜色
+        };
+        return colors[language] || '#858585';
+    }
+
+    function displayProjects(projects) {
+        const container = document.getElementById('projects-container');
+        container.innerHTML = '';
+
+        projects.slice(0, 10).forEach(project => {
+            const projectElement = document.createElement('div');
+            projectElement.className = 'project-item';
+            projectElement.innerHTML = `
+                <h3><a href="${project.html_url}" target="_blank">${project.name}</a></h3>
+                <p>${project.description || 'No description available.'}</p>
+                <div class="project-meta">
+                    <span class="project-language" style="background-color: ${getLanguageColor(project.language)}">${project.language}</span>
+                    <span class="project-stars"><i class="fas fa-star"></i>${project.stargazers_count}</span>
+                </div>
+            `;
+            container.appendChild(projectElement);
+        });
+    }
+
+    function fetchGitHubProjects() {
+        const username = 'hiddenSharp429'; // 替换为您的GitHub用户名
+        fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`)
+            .then(response => response.json())
+            .then(repos => {
+                allProjects = repos;
+                displayProjects(allProjects);
+            })
+            .catch(error => console.error('Error fetching GitHub projects:', error));
+    }
+
+    function refreshProjects() {
+        const shuffled = allProjects.sort(() => 0.5 - Math.random());
+        displayProjects(shuffled);
+    }
+
+    // 在页面加载完成后调用此函数
+    fetchGitHubLanguages();
+
+    // 初始化激活状态
+    updateActiveLink();
+
+    // 调用函数获取GitHub项目数据
+    fetchGitHubProjects();
+
+    const refreshButton = document.getElementById('refresh-projects');
+    refreshButton.addEventListener('click', refreshProjects);
 });
