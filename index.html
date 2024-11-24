@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hiddenSharp429的个人网站</title>
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="blog/styles/blog.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -16,6 +17,7 @@
                 <li><a href="#skills" data-i18n="nav.skills">技能</a></li>
                 <li><a href="#projects" data-i18n="nav.projects">项目</a></li>
                 <li><a href="#contact" data-i18n="nav.contact">联系</a></li>
+                <li><a href="#blog" data-i18n="nav.blog">博客</a></li>
             </ul>
         </nav>
         <div class="language-selector">
@@ -28,25 +30,64 @@
                 <li data-lang="en">English</li>
             </ul>
         </div>
+        <div class="auth-buttons">
+            <button id="loginBtn" class="auth-btn">登录</button>
+            <button id="registerBtn" class="auth-btn">注册</button>
+        </div>
     </header>
 
     <main id="fullpage">
         <section id="home" class="section hero">
-            <div class="hero-content">
-                <h1><span data-i18n="hero.greeting">你好呀，我是</span> <span class="highlight" data-i18n="hero.name">hiddenSharp429</span></h1>
-                <p data-i18n="hero.title"></p>
-                <div class="social-badges">
-                    <a href="https://blog.csdn.net/Zchengjisihan?spm=1019.2139.3001.5343" target="_blank"><img src="https://img.shields.io/badge/-Zchengjisihan-red?style=flat&logo=CSDN&logoColor=white" alt="CSDN"></a>
-                    <a href="https://github.com/hiddenSharp429" target="_blank"><img src="https://img.shields.io/badge/-hiddenSharp429-black?style=flat&logo=GitHub&logoColor=white" alt="GitHub"></a>
+            <div class="hero-background"></div>
+            <div class="hero-split">
+                <div class="hero-left">
+                    <div class="text-content">
+                        <!-- 第一阶段：问候语 -->
+                        <div class="text-stage stage-1">
+                            <h1 class="animate-text">
+                                <span data-i18n="hero.greeting" class="fade-in">你好呀，我是</span> 
+                                <span class="highlight fade-in-delay" data-i18n="hero.name">hiddenSharp429</span>
+                            </h1>
+                        </div>
+                        
+                        <!-- 第二阶段：简介和徽标 -->
+                        <div class="text-stage stage-2 hidden">
+                            <p class="fade-in" data-i18n="hero.title"></p>
+                            <p class="fade-in-delay" data-i18n="hero.brief"></p>
+                            <div class="social-badges fade-in-delay-2">
+                                <!-- CSDN Profile View Count -->
+                                <p>
+                                    <a href="https://blog.csdn.net/Zchengjisihan?spm=1019.2139.3001.5343"><img src="https://img.shields.io/badge/My%20Chinese%20Blog-Click-red?style=social&logo=CSDN"></img>
+                                    </a>
+                                    <img src="https://img.shields.io/badge/My%20Blog%20Views-514516-blue?style=social">
+                                    </img>
+                                    <img src="https://img.shields.io/badge/Posts-121-green?style=social">
+                                    </img>
+                                    <img src="https://img.shields.io/badge/Followers-4827-orange?style=social">
+                                    </img>
+                                </p>
+                            </div>
+                            <div class="profile-stats fade-in-delay-3">
+                                <p>
+                                    <img src="https://img.shields.io/badge/-hiddenSharp429-black?style=flat&logo=GitHub&logoColor=white">
+                                    <img src="http://views.whatilearened.today/views/github/hiddenSharp429/views.svg"/>
+                                    <a href="https://hiddensharp429.github.io/My-WEB-Site"><img src="https://img.shields.io/website?label=Website%20status%20%3A&url=https%3A%2F%2Fdaniels-roth-stan.fr%2F"/></a>
+                                    <a href="https://github.com/hiddenSharp429/"><img src="https://img.shields.io/github/followers/hiddenSharp429?color=%234CC61E&label=GitHub%20Followers%20%3A"/></a>
+                                    <a href="https://github.com/hiddenSharp429?tab=repositories"><img src="https://badges.frapsoft.com/os/v2/open-source.svg?v=103"/></a>
+                                    <a href="mailto:z404878860@163.com?subject=[GitHub]%20🔥%20Prise%20de%20contact&body=Bonjour%20Stan%2C%0A%0AJe%20viens%20vers%20toi%20aujourd%27hui%20apr%C3%A8s%20avoir%20vu%20ton%20profil%20GitHub%20pour%20..."><img src="https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg"/></a>
+                                    <img src="https://img.shields.io/badge/Front End-Vue/React-42b883"/>
+                                    <img src="https://img.shields.io/badge/Back End-Express/Flask/Spring Boot-f5117"/>
+                                    <img src="https://img.shields.io/badge/APP-REACT NATIVE/SWIFT-f55247"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="profile-stats">
-                    <img src="https://komarev.com/ghpvc/?username=hiddenSharp429&style=flat"/>
-                    <a href="https://github.com/hiddenSharp429/"><img src="https://img.shields.io/github/followers/hiddenSharp429?color=%234CC61E&label=GitHub%20Followers%20%3A"/></a>
-                    <a href="https://github.com/hiddenSharp429?tab=repositories"><img src="https://badges.frapsoft.com/os/v2/open-source.svg?v=103"/></a>
-                    <a href="mailto:z404878860@163.com"><img src="https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg"/></a>
-                    <img src="https://img.shields.io/badge/Front End-Vue/React-42b883"/>
-                    <img src="https://img.shields.io/badge/Back End-Express/Flask-f55247"/>
-                </div>
+                <div class="hero-right"></div>
+            </div>
+            <div class="scroll-indicator">
+                <span class="scroll-text" data-i18n="hero.scroll">向下滚动</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
         </section>
 
@@ -107,10 +148,10 @@
                     <a href="https://vuejs.org/"><img src="https://vuejs.org/images/logo.png" alt="Vue"></a>
                     <a href="https://git-scm.com/"><img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" alt="Git"></a>
                     <a href="https://developers.weixin.qq.com/"><img src="https://img.ixintu.com/upload/jpg/20210523/5a7ab702e4fef0ed592badd23e2b2c7e_50947_800_800.jpg!con" alt="微信小程序"></a>
-                    <a href="https://pytorch.org/"><img src="https://static-00.iconduck.com/assets.00/pytorch-icon-79x96-9fg753wd.png" alt="PyTorch"></a>
+                    <a href="https://pytorch.org/"><img src="https://pytorch.org/assets/images/pytorch-logo.png" alt="PyTorch"></a>
                     <a href="https://flask.palletsprojects.com/en/2.3.x/"><img src="https://icon.icepanel.io/Technology/svg/Flask.svg" alt="Flask"></a>
                     <a href="https://cdn.icon-icons.com/icons2/2596/PNG/512/more_icon_155113.png"><img src="https://cdn.icon-icons.com/icons2/2596/PNG/512/more_icon_155113.png" alt="更多"></a>
-
+                </div>
             </div>
             <div class="skills-assessment">
                 <h4 style="text-align: center; margin-bottom: 1rem;">GitHub 语言统计</h4>
@@ -152,6 +193,22 @@
                 <button type="submit" data-i18n="contact.submit">发送消息</button>
             </form>
         </section>
+
+        <section id="blog" class="section blog-section">
+            <div class="blog-section-header">
+                <h2 data-i18n="blog.title">博客文章</h2>
+                <!-- 仅对管理员账号显示 -->
+                <div id="blogActions" class="blog-admin-actions">
+                    <input type="file" id="mdFileInput" accept=".md" style="display: none;">
+                    <button id="newBlogBtn" class="primary-button">
+                        <i class="fas fa-plus"></i>
+                        <span class="button-text">发布博客</span>
+                    </button>
+                </div>
+            </div>
+            <!-- 博客列表容器 -->
+            <div id="blogList" class="blog-list"></div>
+        </section>
     </main>
 
     <footer>
@@ -162,7 +219,41 @@
         <p>&copy; 2023 hiddenSharp429. <span data-i18n="footer.rights">保留所有权利。</span></p>
     </footer>
 
-    <script src="scripts/main.js"></script>
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="loginForm" class="auth-form">
+                <h2>登录</h2>
+                <input type="email" id="loginEmail" placeholder="邮箱" required>
+                <input type="password" id="loginPassword" placeholder="密码" required>
+                <button id="submitLogin">登录</button>
+                <p>还没有账号？<span id="switchToRegister" class="switch-form">立即注册</span></p>
+            </div>
+            <div id="registerForm" class="auth-form hidden">
+                <h2>注册</h2>
+                <input type="email" id="registerEmail" placeholder="邮箱" required>
+                <input type="password" id="registerPassword" placeholder="密码" required>
+                <input type="password" id="confirmPassword" placeholder="确认密码" required>
+                <button id="submitRegister">注册</button>
+                <p>已有账号？<span id="switchToLogin" class="switch-form">立即登录</span></p>
+            </div>
+        </div>
+    </div>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-markup.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module" src="scripts/main.js"></script>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    </script>
 </body>
 </html>
