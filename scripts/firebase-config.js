@@ -3,22 +3,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebas
 import { getAuth } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
 
-
-
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB-I5g_U6T-W7WOUVzTSx1-P0mvArOxDGs",
-    authDomain: "hiddensharp-web-site-project.firebaseapp.com",
-    databaseURL: "https://hiddensharp-web-site-project-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "hiddensharp-web-site-project",
-    storageBucket: "hiddensharp-web-site-project.firebasestorage.app",
-    messagingSenderId: "694551904090",
-    appId: "1:694551904090:web:1ff163244114cdd715fd63"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
-
-
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
