@@ -1,0 +1,29 @@
+{
+    "tags": [
+        {
+            "id": "frontend",
+            "name": "前端开发",
+            "color": "#61dafb"
+        },
+        {
+            "id": "backend",
+            "name": "后端开发",
+            "color": "#3c873a"
+        },
+        {
+            "id": "algorithm",
+            "name": "算法",
+            "color": "#f7df1e"
+        },
+        {
+            "id": "ai",
+            "name": "人工智能",
+            "color": "#ff4d4f"
+        },
+        {
+            "id": "tools",
+            "name": "工具使用",
+            "color": "#13c2c2"
+        }
+    ]
+}

@@ -5,12 +5,13 @@
         "about": "关于",
         "skills": "技能",
         "projects": "项目",
-        "contact": "联系"
+        "contact": "联系",
+        "blog": "博客"
       },
       "hero": {
         "greeting": "你好呀，我是",
         "name": "hiddenSharp429",
-        "title": "我是一名全栈开发者💻、移动应用开发者📱和机器学习爱好者🧠，致力于解决现实世界的问题🌏。我热衷于创造软件和工具来帮助人们，探索AI的前沿，并建立社区。如果你觉得我的项目有趣，欢迎给个星标🌟，你的支持可能会让某人的一天变得更美好🙏。"
+        "title": "一名全栈开发者💻、移动应用开发者📱和机器学习爱好者🧠，致力于解决现实世界的问题🌏。我热衷于创造软件和工具来帮助人们，探索AI的前沿，并建立社区。如果你觉得我的项目有趣，欢迎给个星标🌟，你的支持可能会让某人的一天变得更美好🙏。"
       },
       "about": {
         "title": "关于我",
@@ -57,6 +58,12 @@
       },
       "footer": {
         "rights": "保留所有权利。"
+      },
+      "blog": {
+        "title": "博客文章",
+        "newPost": "新建博客",
+        "readMore": "阅读更多",
+        "noPosts": "暂无博客文章"
       }
     },
     "en": {
@@ -65,12 +72,13 @@
         "about": "About",
         "skills": "Skills",
         "projects": "Projects",
-        "contact": "Contact"
+        "contact": "Contact",
+        "blog": "Blog"
       },
       "hero": {
         "greeting": "Hey there! I'm",
         "name": "hiddenSharp429",
-        "title": "I'm a Full-Stack Developer💻, Mobile App Developer📱, and Machine Learning Enthusiast🧠, looking to solve real-world problems🌏. I'm passionate about creating software and tools to help people, exploring the frontiers of AI, and building a community. Do 🌟 my repository if you find my project interesting, at least your star could make someone's day 🙏."
+        "title": "A Full-Stack Developer💻, Mobile App Developer📱, and Machine Learning Enthusiast🧠, looking to solve real-world problems🌏. I'm passionate about creating software and tools to help people, exploring the frontiers of AI, and building a community. Do 🌟 my repository if you find my project interesting, at least your star could make someone's day 🙏."
       },
       "about": {
         "title": "About Me",
@@ -117,6 +125,12 @@
       },
       "footer": {
         "rights": "All rights reserved."
+      },
+      "blog": {
+        "title": "Blog",
+        "newPost": "New Post",
+        "readMore": "Read More",
+        "noPosts": "No blog posts yet"
       }
     }
   }
