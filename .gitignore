@@ -1,7 +1,7 @@
 
 .DS_Store
 
-assert/demo.mov
+assets/demo.mov
 
 .idea/
 config/config.js
