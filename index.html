@@ -231,6 +231,7 @@
             </div>
             <div id="registerForm" class="auth-form hidden">
                 <h2>注册</h2>
+                <input type="text" id="registerNickname" placeholder="昵称" required>
                 <input type="email" id="registerEmail" placeholder="邮箱" required>
                 <input type="password" id="registerPassword" placeholder="密码" required>
                 <input type="password" id="confirmPassword" placeholder="确认密码" required>
@@ -255,5 +256,6 @@
         import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
     </script>
+    <div id="toast-container"></div>
 </body>
 </html>

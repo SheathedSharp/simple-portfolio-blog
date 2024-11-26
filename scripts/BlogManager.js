@@ -7,6 +7,7 @@ import { BlogList } from '../blog/components/BlogList.js';
 import { BlogPublisher } from '../blog/components/BlogPublisher.js';
 import { BlogDetail } from '../blog/components/BlogDetail.js';
 import { AuthManager } from './AuthManager.js';
+import { Toast } from '../utils/Toast.js';
 
 
 export class BlogManager {
@@ -124,13 +125,11 @@ export class BlogManager {
     }
 
     showError(message) {
-        // 实现错误提示
-        alert(message); // 可以改为更优雅的提示方式
+        Toast.error(message);
     }
 
     showSuccess(message) {
-        // 实现成功提示
-        alert(message); // 可以改为更优雅的提示方式
+        Toast.success(message);
     }
 
     showList() {

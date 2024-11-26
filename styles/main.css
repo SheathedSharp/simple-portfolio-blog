@@ -1218,9 +1218,28 @@ form select, form input[type="file"] {
 }
 
 .auth-form input {
+    width: 100%;
     padding: 10px;
+    margin: 8px 0;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 14px;
+}
+
+.auth-form input:focus {
+    border-color: #42b883;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(66, 184, 131, 0.2);
+}
+
+#registerNickname {
+    padding-left: 30px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>') no-repeat 8px center;
+    background-color: white;
+}
+
+.auth-form input::placeholder {
+    color: #999;
 }
 
 .auth-form button {
@@ -1341,4 +1360,170 @@ form select, form input[type="file"] {
 
 main {
     padding-top: 60px;
+}
+
+.user-nickname {
+    font-weight: 500;
+    margin-right: 10px;
+    color: #42b883;
+}
+
+.comment-user-name {
+    font-weight: bold;
+    color: #42b883;
+}
+
+.comment-form-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* 输入框错误状态 */
+.auth-form input.error {
+    border-color: #ff4444;
+    background-color: #fff8f8;
+}
+
+.auth-form input.error:focus {
+    box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2);
+}
+
+/* 禁用状态的按钮样式 */
+.auth-form button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 加载动画 */
+.fa-spinner {
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fa-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Toast 通知样式 */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.toast {
+    background: white;
+    border-radius: 4px;
+    padding: 12px 24px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    min-width: 250px;
+    max-width: 350px;
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast.success {
+    background-color: #42b883;
+    border-left: 4px solid #2d8659;
+}
+
+.toast.error {
+    background-color: #ff4444;
+    border-left: 4px solid #cc0000;
+}
+
+.toast.info {
+    background-color: #2196F3;
+    border-left: 4px solid #0960a5;
+}
+
+/* 修改图标容器样式 */
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    min-width: 24px; /* 确保图标有固定宽度 */
+}
+
+/* 修改图标样式 */
+.toast-icon i {
+    font-size: 20px;
+    color: white;
+    display: inline-block; /* 确保图标显示 */
+}
+
+.toast-message {
+    flex-grow: 1;
+    margin-right: 12px;
+    color: white;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: white;
+    opacity: 0.7;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    transition: opacity 0.2s;
+    display: flex; 
+    align-items: center; 
+}
+
+.toast-close i {
+    font-size: 16px; 
+    color: white; 
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+.toast.removing {
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+}
+
+/* 添加动画效果 */
+@keyframes slideIn {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(120%);
+        opacity: 0;
+    }
 }

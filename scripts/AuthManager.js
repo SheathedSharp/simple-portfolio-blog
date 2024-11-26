@@ -1,16 +1,22 @@
 import { auth, db } from './firebase-config.js';
 import { 
-    signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword, 
-    signOut
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    updateProfile,
+    fetchSignInMethodsForEmail
 } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
 import { 
     doc, 
-    setDoc, 
     getDoc, 
-    updateDoc,
-    collection
+    setDoc,
+    collection,
+    query,
+    where,
+    getDocs,
+    serverTimestamp 
 } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+import { Toast } from '../utils/Toast.js';
 
 export class AuthManager {
     constructor() {
@@ -23,6 +29,7 @@ export class AuthManager {
         this.userAvatar = document.getElementById('userAvatar');
         this.currentUser = null;
         this.userRole = null;
+        this.isSubmitting = false;
 
         this.initializeEventListeners();
         this.initializeAuthStateListener();
@@ -42,6 +49,12 @@ export class AuthManager {
     }
 
     initializeEventListeners() {
+        // 移除可能存在的旧事件监听器
+        const oldAuthButtons = document.querySelector('.auth-buttons');
+        const newAuthButtons = oldAuthButtons.cloneNode(true);
+        oldAuthButtons.parentNode.replaceChild(newAuthButtons, oldAuthButtons);
+        this.authButtons = newAuthButtons;
+
         // 使用事件委托来处理登录和注册按钮的点击
         this.authButtons.addEventListener('click', (e) => {
             if (e.target.id === 'loginBtn') {
@@ -55,7 +68,11 @@ export class AuthManager {
             }
         });
         
-        // 其他事件监听保持不变
+        // 移除旧的关闭按钮事件监听器
+        const oldCloseBtn = this.closeBtn;
+        const newCloseBtn = oldCloseBtn.cloneNode(true);
+        oldCloseBtn.parentNode.replaceChild(newCloseBtn, oldCloseBtn);
+        this.closeBtn = newCloseBtn;
         this.closeBtn?.addEventListener('click', () => this.hideModal());
         
         // 表单切换
@@ -111,49 +128,165 @@ export class AuthManager {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log('登录成功:', userCredential.user);
             this.hideModal();
-            alert('登录功！');
         } catch (error) {
             console.error('登录错误:', error);
-            alert('登录失败：' + this.getErrorMessage(error.code));
+            Toast.error(this.getErrorMessage(error.code));
         }
     }
 
     async handleRegister() {
-        const email = document.getElementById('registerEmail').value;
-        const password = document.getElementById('registerPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
+        if (this.isSubmitting) return;
+        
+        const submitButton = document.getElementById('submitRegister');
+        const switchToLoginBtn = document.getElementById('switchToLogin');
+        
+        const nickname = document.getElementById('registerNickname')?.value.trim();
+        const email = document.getElementById('registerEmail')?.value?.trim();
+        const password = document.getElementById('registerPassword')?.value;
+        const confirmPassword = document.getElementById('confirmPassword')?.value;
+
+        // 重置所有输入框的状态
+        submitButton.querySelectorAll('input').forEach(input => {
+            input.classList.remove('error');
+        });
+
+        // 验证昵称
+        if (!nickname) {
+            this.showError('请输入昵称！', 'registerNickname');
+            return;
+        }
+
+        if (nickname.length < 2 || nickname.length > 20) {
+            this.showError('昵称长度应在2-20个字符之间！', 'registerNickname');
+            return;
+        }
+
+        // 验证邮箱
+        if (!email) {
+            this.showError('请输入邮箱！', 'registerEmail');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            this.showError('请输入有效的邮箱地址！', 'registerEmail');
+            return;
+        }
+
+        // 验证密码
+        if (!password || !confirmPassword) {
+            this.showError('请输入密码！');
+            return;
+        }
 
         if (password !== confirmPassword) {
-            alert('两次输入的密码不一致！');
+            this.showError('两次输入的密码不一致！', 'confirmPassword');
             return;
         }
 
         if (password.length < 6) {
-            alert('密码长度至少需要6个字符！');
+            this.showError('密码长度至少需要6个字符！', 'registerPassword');
             return;
         }
 
         try {
+            this.isSubmitting = true;
+            submitButton.disabled = true;
+            switchToLoginBtn.style.pointerEvents = 'none';
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 注册中...';
+
+            // 首先创建用户账号
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             
             // 设置默认头像
-            const defaultAvatarUrl = 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + email;
+            const defaultAvatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`;
             
-            // 创建用户文档
-            const userRef = doc(db, 'users', userCredential.user.uid);
-            await setDoc(userRef, {
-                email: email,
-                avatarUrl: defaultAvatarUrl,
-                createdAt: new Date().toISOString() // 使用 ISO 字符串格式
+            // 更新用户显示名称和头像
+            await updateProfile(userCredential.user, {
+                displayName: nickname,
+                photoURL: defaultAvatarUrl
             });
 
-            console.log('注册成功:', userCredential.user);
-            alert('注册成功！');
-            this.switchForms('login');
+            // 创建用户文档
+            try {
+                await setDoc(doc(db, 'users', userCredential.user.uid), {
+                    email: email,
+                    nickname: nickname,
+                    avatarUrl: defaultAvatarUrl,
+                    role: 'user',
+                    createdAt: serverTimestamp()
+                });
+
+                // 清空输入框
+                document.getElementById('registerNickname').value = '';
+                document.getElementById('registerEmail').value = '';
+                document.getElementById('registerPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                
+                // 显示成功消息
+                Toast.success('注册成功！');
+                
+                // 隐藏模态框
+                this.hideModal();
+
+                // 自动登录（因为 Firebase 在注册后会自动登录）
+                // 触发用户状态更新
+                this.updateAuthUI(true, email);
+
+            } catch (error) {
+                console.error('创建用户文档失败:', error);
+                // 如果创建用户文档失败，删除已创建的用户账号
+                await userCredential.user.delete();
+                throw error;
+            }
         } catch (error) {
             console.error('注册错误:', error);
-            alert('注册失败：' + this.getErrorMessage(error.code));
+            Toast.error(this.getErrorMessage(error.code));
+        } finally {
+            this.isSubmitting = false;
+            submitButton.disabled = false;
+            switchToLoginBtn.style.pointerEvents = 'auto';
+            submitButton.innerHTML = '注册';
         }
+    }
+
+    showError(message, inputId = null) {
+        if (inputId) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.classList.add('error');
+                input.focus();
+            }
+        }
+        
+        // 确保消息不为空
+        if (!message || typeof message !== 'string') {
+            message = '发生未知错误，请重试';
+        }
+        
+        console.log('Showing error:', message); // 添加日志
+        Toast.error(message);
+    }
+
+    showSuccess(message) {
+        Toast.success(message);
+    }
+
+    getErrorMessage(errorCode) {
+        const errorMessages = {
+            'auth/email-already-in-use': '该邮箱已被注册',
+            'auth/invalid-email': '无效的邮箱地址',
+            'auth/operation-not-allowed': '邮箱注册未启用',
+            'auth/weak-password': '密码强度太弱',
+            'auth/network-request-failed': '网络连接失败',
+            'auth/too-many-requests': '操作过于频繁，请稍后再试',
+            'auth/user-not-found': '用户不存在',
+            'auth/wrong-password': '密码错误',
+            'auth/invalid-credential': '邮箱或密码错误',
+            'default': '操作失败，请重试'
+        };
+        
+        return errorMessages[errorCode] || errorMessages.default;
     }
 
     async updateAuthUI(isLoggedIn, email = '') {
@@ -163,29 +296,26 @@ export class AuthManager {
                 const userDoc = await getDoc(userRef);
                 
                 let avatarUrl;
+                let nickname;
                 let isAdmin = false;
                 
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     avatarUrl = userData.avatarUrl;
+                    nickname = userData.nickname;
                     isAdmin = userData.role === 'admin';
                 } else {
-                    avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`;
-                    await setDoc(userRef, {
-                        email: email,
-                        avatarUrl: avatarUrl,
-                        role: 'user',
-                        createdAt: new Date().toISOString()
-                    });
+                    avatarUrl = auth.currentUser.photoURL;
+                    nickname = auth.currentUser.displayName || '用户';
                 }
                 
                 this.authButtons.innerHTML = `
                     <div class="user-avatar ${isAdmin ? 'admin-avatar' : ''}">
-                        <img id="userAvatar" src="${avatarUrl}" alt="User Avatar">
+                        <img id="userAvatar" src="${avatarUrl}" alt="${nickname}">
                         <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
-                        ${isAdmin ? '<span class="admin-badge" title="管理员">👑</span>' : ''}
+                        ${isAdmin ? '<span class="admin-badge" title="管理员"><i class="fas fa-crown"></i></span>' : ''}
                     </div>
-                    <span title="${email}">${email}</span>
+                    <span class="user-nickname">${nickname}</span>
                     <button id="logoutBtn" class="auth-btn">退出</button>
                 `;
                 
@@ -194,18 +324,6 @@ export class AuthManager {
                 this.initializeAvatarListeners();
             } catch (error) {
                 console.error('获取用户信息失败:', error);
-                this.authButtons.innerHTML = `
-                    <div class="user-avatar">
-                        <img id="userAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=${email}" alt="User Avatar">
-                        <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
-                    </div>
-                    <span title="${email}">${email}</span>
-                    <button id="logoutBtn" class="auth-btn">退出</button>
-                `;
-                
-                this.avatarUpload = document.getElementById('avatarUpload');
-                this.userAvatar = document.getElementById('userAvatar');
-                this.initializeAvatarListeners();
             }
         } else {
             this.authButtons.innerHTML = `
@@ -219,20 +337,6 @@ export class AuthManager {
         auth.onAuthStateChanged((user) => {
             this.updateAuthUI(!!user, user?.email);
         });
-    }
-
-    getErrorMessage(errorCode) {
-        const errorMessages = {
-            'auth/email-already-in-use': '该邮箱已被注册',
-            'auth/invalid-email': '无效的邮箱地址',
-            'auth/operation-not-allowed': '邮箱/密码登录未启用',
-            'auth/weak-password': '密码强度太弱',
-            'auth/user-disabled': '该用户账号已被禁用',
-            'auth/user-not-found': '用户不存在',
-            'auth/wrong-password': '密码错误',
-            'auth/invalid-credential': '无效的登录证'
-        };
-        return errorMessages[errorCode] || '发生未知错误';
     }
 
     async handleAvatarUpload(file) {
@@ -274,13 +378,13 @@ export class AuthManager {
                 // 更新界面
                 this.userAvatar.src = data.data.url;
                 this.userAvatar.style.opacity = '1';
-                alert('头像更新成功！');
+                Toast.success('头像更新成功！');
             } else {
                 throw new Error('Upload failed: ' + (data.error?.message || 'Unknown error'));
             }
         } catch (error) {
             console.error('头像上传失败:', error);
-            alert('头像上传失败，请重试');
+            Toast.error('头像上传失败，请重试');
             this.userAvatar.style.opacity = '1';
         }
     }
@@ -290,14 +394,14 @@ export class AuthManager {
         // 检查文件类型
         const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
         if (!validTypes.includes(file.type)) {
-            alert('只支持 JPG、PNG 和 GIF 格式的图片');
+            Toast.error('只支持 JPG、PNG 和 GIF 格式的图片');
             return false;
         }
 
         // 限制文件大小为 500KB
         const maxSize = 500 * 1024; // 500KB
         if (file.size > maxSize) {
-            alert('图片大小不能超过 500KB');
+            Toast.error('图片大小不能超过 500KB');
             return false;
         }
 
@@ -316,18 +420,25 @@ export class AuthManager {
         });
     }
 
-    async initializeAuth() {
+    initializeAuth() {
+        let isFirstAuth = true; // 添加标志来追踪是否是首次认证
+        
         auth.onAuthStateChanged(async (user) => {
             this.currentUser = user;
             if (user) {
                 // 获取用户角色
                 await this.loadUserRole();
+                // 只在首次登录时显示提示
+                if (isFirstAuth) {
+                    Toast.success('登录成功！');
+                }
                 // 触发用户登录事件
                 this.dispatchUserStateChange();
             } else {
                 this.userRole = null;
                 this.dispatchUserStateChange();
             }
+            isFirstAuth = false; // 更新标志
         });
     }
 
