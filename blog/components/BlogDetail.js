@@ -63,21 +63,27 @@ export class BlogDetail {
             `;
         };
 
-        // 自定义图片渲染，保持原有的 HTML 标签
+        // 自定义图片渲染
         renderer.image = (href, title, text) => {
-            if (text && text.includes('<img')) {
-                return text; // 如果已经是 HTML 标签，直接返回
-            }
-            const titleAttr = title ? ` title="${title}"` : '';
-            const altAttr = text ? ` alt="${text}"` : '';
-            let style = '';
-            if (text && text.includes('zoom:')) {
-                const zoomMatch = text.match(/zoom:(\d+)%/);
-                if (zoomMatch) {
-                    style = ` style="zoom:${zoomMatch[1]}%"`;
-                }
-            }
-            return `<img src="${href}"${altAttr}${titleAttr}${style}>`;
+            // 如果href是对象，提取实际的URL
+            const originalUrl = (typeof href === 'object' && href.href) ? href.href : href;
+            
+            // 使用图片代理服务
+            const proxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(originalUrl)}`;
+            
+            // 如果href是对象，提取实际的text
+            const imageText = (typeof href === 'object' && href.text) ? href.text : text;
+
+            // 构建图片标签
+            const imgTag = `<img 
+                src="${proxyUrl}"
+                alt="${imageText || ''}"
+                ${title ? `title="${title}"` : ''}
+                loading="lazy"
+                onerror="console.error('Failed to load image:', this.src);"
+            >`;
+            
+            return imgTag;
         };
 
         // 自定义代码块渲染
@@ -296,11 +302,11 @@ export class BlogDetail {
         Prism.highlightAll();
     }
 
-    renderError(message = '加载失败') {
+    renderError(message = '加载失') {
         this.container.innerHTML = `
             <div class="blog-error">
                 <h2>${message}</h2>
-                <p>抱歉，无法加载所请求的文章。</p>
+                <p>抱歉，无法加载所请求的文。</p>
                 <a href="../index.html#blog" class="back-to-list">
                     <i class="fas fa-arrow-left"></i> 返回博客列表
                 </a>
