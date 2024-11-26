@@ -1,4 +1,4 @@
-import { db } from '../../scripts/firebase-config.js';
+import { db } from '../../js/firebase-config.js';
 import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
 
 export class BlogList {

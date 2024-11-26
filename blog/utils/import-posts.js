@@ -1,4 +1,4 @@
-import { db } from '../../scripts/firebase-config.js';
+import { db } from '../../js/firebase-config.js';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import fs from 'fs';
 import path from 'path';

@@ -13,17 +13,6 @@ A modern, responsive personal website built with HTML, CSS, and JavaScript.
 
 ## Project Structure
 
-```
-├── src/                  # Source files
-│   ├── components/       # Reusable components
-│   ├── styles/          # Global styles and themes
-│   └── utils/           # Utility functions
-├── blog/                # Blog related components and styles
-├── scripts/             # JavaScript modules
-├── config/              # Configuration files
-├── public/              # Static assets
-└── styles/              # CSS styles
-```
 
 ## Contributing
 

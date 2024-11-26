@@ -8,7 +8,7 @@ export class LanguageManager {
 
     async initializeLanguageSystem() {
         try {
-            const response = await fetch('../languages.json');
+            const response = await fetch('../config/languages.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

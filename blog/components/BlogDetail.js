@@ -1,4 +1,4 @@
-import { db } from '../../scripts/firebase-config.js';
+import { db } from '../../js/firebase-config.js';
 import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
 import { Comments } from './BlogComments.js';
 

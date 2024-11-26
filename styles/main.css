@@ -106,7 +106,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../src/home_bg.jpg') no-repeat center center;
+    background: url('../assert/img/home_bg.jpg') no-repeat center center;
     background-size: cover;
     z-index: 1;
 }
