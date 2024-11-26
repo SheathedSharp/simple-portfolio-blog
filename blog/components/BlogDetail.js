@@ -1,6 +1,6 @@
 import { db } from '../../scripts/firebase-config.js';
 import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
-import { Comments } from './Comments.js';
+import { Comments } from './BlogComments.js';
 
 export class BlogDetail {
     constructor() {
@@ -160,10 +160,17 @@ export class BlogDetail {
                     ...docSnap.data(),
                     date: docSnap.data().createdAt?.toDate().toLocaleDateString('zh-CN')
                 };
+                
+                // 先渲染博客内容
                 this.render(post);
                 
-                // 初始化评论系统
-                new Comments(postId, this.container.querySelector('.comments-container'));
+                // 等待 DOM 更新后再初始化评论系统
+                requestAnimationFrame(() => {
+                    const commentsContainer = this.container.querySelector('.comments-section');
+                    if (commentsContainer) {
+                        new Comments(post.id, commentsContainer);
+                    }
+                });
             } else {
                 this.renderError('博客不存在');
             }
@@ -290,6 +297,13 @@ export class BlogDetail {
                     </a>
                 </div>
             </article>
+            
+            <!-- 添加评论区容器 -->
+            <div class="comments-section">
+                <h3>评论</h3>
+                <div class="comment-form-section"></div>
+                <div class="comments-list"></div>
+            </div>
         `;
 
         // 9. 渲染数学公式

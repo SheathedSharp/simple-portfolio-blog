@@ -153,17 +153,80 @@
     font-family: monospace;
 }
 
+/* 评论相关样式 */
 .comments-section {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.comment-form-section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.comment-form {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.comment-form textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 1rem 0;
+    resize: vertical;
+    box-sizing: border-box;
+    display: block;
+}
+
+.comments-list {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .comment {
-    background: #f8f9fa;
+    width: 100%;
+    box-sizing: border-box;
     padding: 1rem;
-    border-radius: 4px;
     margin-bottom: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.comment-user {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 }
 
 .comment-author {
@@ -171,9 +234,53 @@
     color: var(--primary-color);
 }
 
+.comment-email,
 .comment-date {
-    font-size: 0.8rem;
+    font-size: 0.9em;
     color: #666;
+}
+
+.comment-content {
+    margin-left: 52px; /* 头像宽度(40px) + gap(12px) */
+    color: #444;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.delete-comment {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding: 4px;
+}
+
+.comment:hover .delete-comment {
+    opacity: 1;
+}
+
+.submit-btn:hover {
+    background-color: #3aa876; /* 深一点的绿色 */
+    color: white; /* 确保hover时文字保持白色 */
+}
+
+.submit-btn .btn-text {
+    margin-right: 8px;
+}
+
+.submit-btn .loading-spinner {
+    display: none;
+}
+
+.submit-btn.loading .btn-text {
+    display: none;
+}
+
+.submit-btn.loading .loading-spinner {
+    display: inline-block;
 }
 
 .tag-selector-modal {
@@ -880,4 +987,156 @@ pre.line-numbers > code {
     .language-cpp .token.number {
         color: #b5cea8;
     }
+}
+
+/* 评论相关样式 */
+.comment-form {
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 1rem 0;
+    resize: vertical;
+}
+
+.comment-form-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.comment-user-name,
+.comment-author {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.comment-user-email,
+.comment-email,
+.comment-date {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.comment {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.comment-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-content {
+    margin-left: 50px; /* 头像宽度 + 间距 */
+    color: #444;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.delete-comment {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.comment:hover .delete-comment {
+    opacity: 1;
+}
+
+.submit-btn {
+    float: right;
+    padding: 0.5rem 1.5rem;
+    background-color: #42b883;
+    color: white;
+    border: 2px solid #42b883;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.submit-btn:hover {
+    background-color: #287452;
+    border-color: #3aa876;
+    color: white;
+}
+
+/* 确保按钮容器不会溢出 */
+.comment-form::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.login-prompt {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.login-prompt a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+.no-comments {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.error {
+    color: #ff4444;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
