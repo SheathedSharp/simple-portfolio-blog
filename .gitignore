@@ -4,5 +4,4 @@
 src/demo.mov
 
 .idea/
-
-.config/config.js
+config/config.js
