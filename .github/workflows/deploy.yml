@@ -16,10 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: Create deployment directory
+        run: |
+          mkdir deploy
+          cp -r * deploy/ || true
+          cp -r .* deploy/ || true 2>/dev/null || true
+      
       - name: Create config file
         run: |
-          mkdir -p config
-          cat > config/config.js << 'EOL'
+          mkdir -p deploy/config
+          cat > deploy/config/config.js << 'EOL'
           const config = {
             apiKey: '${{ secrets.FIREBASE_API_KEY }}',
             authDomain: '${{ secrets.FIREBASE_AUTH_DOMAIN }}',
@@ -34,8 +40,8 @@ jobs:
       
       - name: List files
         run: |
-          ls -la config/
-          cat config/config.js
+          ls -la deploy/config/
+          cat deploy/config/config.js
       
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -44,5 +50,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./deploy
           force_orphan: true
