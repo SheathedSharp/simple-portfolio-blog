@@ -1,3 +1,5 @@
+import { getBasePath } from '../utils/pathHelper.js';
+
 export class LanguageManager {
     constructor() {
         this.currentLanguage = 'zh';
@@ -8,7 +10,8 @@ export class LanguageManager {
 
     async initializeLanguageSystem() {
         try {
-            const response = await fetch('../config/languages.json');
+            const basePath = getBasePath();
+            const response = await fetch(`${basePath}/config/languages.json`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

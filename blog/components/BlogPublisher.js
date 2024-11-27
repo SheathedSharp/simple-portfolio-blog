@@ -2,6 +2,7 @@ import { db, auth } from '../../js/firebase-config.js';
 import { 
     collection, addDoc, serverTimestamp 
 } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+import { getBasePath } from '../../utils/pathHelper.js';
 
 export class BlogPublisher {
     constructor(container) {
@@ -23,7 +24,8 @@ export class BlogPublisher {
 
     async loadTags() {
         try {
-            const response = await fetch('/blog/config/tags.json');
+            const basePath = getBasePath();
+            const response = await fetch(`${basePath}/blog/config/tags.json`);
             if (!response.ok) {
                 throw new Error('Failed to load tags');
             }
