@@ -18,7 +18,9 @@ jobs:
       
       - name: Create config file
         run: |
-          echo "const config = {
+          mkdir -p config
+          cat > config/config.js << 'EOL'
+          const config = {
             apiKey: '${{ secrets.FIREBASE_API_KEY }}',
             authDomain: '${{ secrets.FIREBASE_AUTH_DOMAIN }}',
             databaseURL: '${{ secrets.FIREBASE_DATABASE_URL }}',
@@ -26,13 +28,21 @@ jobs:
             storageBucket: '${{ secrets.FIREBASE_STORAGE_BUCKET }}',
             messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}',
             appId: '${{ secrets.FIREBASE_APP_ID }}'
-          }; export default config;" > config/config.js
+          };
+          export default config;
+          EOL
+      
+      - name: List files
+        run: |
+          ls -la config/
+          cat config/config.js
       
       - name: Setup Pages
         uses: actions/configure-pages@v3
-        
+      
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: . 
+          publish_dir: .
+          force_orphan: true
