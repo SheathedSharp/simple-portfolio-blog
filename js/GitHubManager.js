@@ -1,6 +1,6 @@
 export class GitHubManager {
     constructor() {
-        this.username = 'hiddenSharp429';
+        this.username = 'SheathedSharp';
         this.allProjects = [];
         this.colors = {
             JavaScript: '#f1e05a',
